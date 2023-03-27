@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  
+{% block content %}
+<h1>New Order</h1>
+<form method="POST">
+  {% csrf_token %}
+  <label for="customer_name">Customer Name:</label>
+  <input type="text" name="customer_name" required>
+  <br>
+  <label for="table_number">Table Number:</label>
+  <select name="table_number_id" id="table_number" class="form-control">
+      {% for table in tables %}
+      <option value="{{ table.id }}">{{ table.number }}</option>
+      {% endfor %}
+  </select>
+  <br>
+  <button type="submit">Create Order</button>
+</form>
+{% endblock %}
+
+{% if messages %}
+{% for message in messages %}
+  <div class="alert alert-{{ message.tags }}">
+    {{ message }}
+  </div>
+{% endfor %}
+{% endif %}
+
+</body>
+
+</html>

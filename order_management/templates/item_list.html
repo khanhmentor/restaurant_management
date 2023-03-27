@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<body>
+  
+{% block content %}
+<h1>Item List</h1>
+
+{% for item in item_list %}
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Note</th>
+        <th>Status</th>
+    </tr>
+    <tr>
+        <td>{{ item.menu.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.note }}</td>
+        <td>
+            <form method="POST">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <select name="new_status_id" id="new_status" class="form-control">
+                                    {% for st in status %}
+                                    <option value="{{ st.id }}"{% if st.id == item.status.id %}selected{% endif %}>{{ st.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                            <input type="hidden" name="item_id" value="{{ item.id }}" readonly>
+                        </td>
+                    </tr>
+                </table>        
+            </form>
+        </td>
+    </tr>
+</table>
+{% endfor %}
+
+{% if messages %}
+{% for message in messages %}
+  <div class="alert alert-{{ message.tags }}">
+    {{ message }}
+  </div>
+{% endfor %}
+{% endif %}
+
+{% endblock %}
+
+</body>
+</html>

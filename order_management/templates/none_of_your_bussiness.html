@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  
+<h1>NONE OF YOUR BUSSINESS! DON'T TRY TO BYPASS OUR PRIVACY</h1>
+<h1>UNAUTHORIZED ACCESS MIGHT BE FACING LEGAL RESPONSIBILITY </h1>
+
+{% if messages %}
+{% for message in messages %}
+  <div class="alert alert-{{ message.tags }}">
+    {{ message }}
+  </div>
+{% endfor %}
+{% endif %}
+
+</body>
+
+</html>

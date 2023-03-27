@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+
+<body>
+
+<h1>Order Details</h1>
+
+<table>
+    <tr>
+    <th>Customer Name:</th>
+    <td>{{ order.customer.name }}</td>
+    </tr>
+    <tr>
+    <th>Table Number:</th>
+    <td>{{ order.table.number }}</td>
+    </tr>
+    <tr>
+    <th>Order Time:</th>
+    <td>{{ order.order_time }}</td>
+    </tr>
+    <tr>
+    <th>Is Paid:</th>
+    <td id="is_paid">{% if order.is_paid %}Yes{% else %}No{% endif %}</td>
+    </tr>
+</table>
+
+<h2>Order Items</h2>
+
+{% if order_items %}
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Note</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in order_items %}
+        <tr>
+          <td>{{ item.menu.name }}</td>
+          <td>{{ item.note }}</td>
+          <td>{{ item.menu.price }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.quantity }} * {{ item.menu.price|floatformat:2 }} =  {{ item.sub_total_cost }}</td>
+          <td class="status" id="{{ item.status.id }}">{{ item.status.name }}</td>
+          {% if item.status.id == 1 %}
+            <td><button id="{{ item.id }}" class="update">Update Item</button></td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="4">Total:</th>
+        <td>{{ order.total_cost }} $</td>
+      </tr>
+    </tfoot>
+  </table>
+{% else %}
+  <p>No items found for this order.</p>
+{% endif %}
+
+<button id="add">Add More Items</button>
+<button id="complete">Complete Order</button>
+
+</body>
+
+<script>
+    $(document).ready(function(){
+      if ($("#is_paid").html() == 'Yes')
+        $("#add").hide(),
+        $(".update").hide(),
+        $("#complete").hide()
+      $("#add").click(function(){
+        window.location.href = window.location.pathname + 'add_item/';
+      });
+      $(".update").click(function(){
+        id = $(this).attr('id')
+        window.location.href = window.location.pathname + 'update_items/' + id;
+      });
+      $("#complete").click(function(){
+        window.location.href = window.location.pathname + 'complete/';
+      });
+    });
+</script>
+
+</html>

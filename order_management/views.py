@@ -4,6 +4,9 @@ from django.contrib import messages
 
 # Create your views here.
 
+def view_menu(request):
+    return render(request, 'view_menu.html')
+
 def local_host(request):
     return redirect('home_page', 0)
 

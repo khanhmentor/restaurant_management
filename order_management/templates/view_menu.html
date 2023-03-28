@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+
+<body>
+  
+{% block content %}
+    <div class="grid-container">
+        <div class="sidebar">
+            <div class="button-container">
+                <a class="menu-button" href="#">KHAI VỊ</a>
+            </div>
+            <div class="button-container">
+                <a class="menu-button" href="#">SÚP &amp; SALAD</a>
+            </div>
+            <div class="button-container">
+                <a class="menu-button" href="#">MÓN CHÍNH</a>
+            </div>
+            <div class="button-container">
+                <a class="menu-button" href="#">THỨC UỐNG</a>
+            </div>
+            <div class="button-container">
+                <a class="menu-button" href="#">RƯỢU</a>
+            </div>
+            <div class="button-container">
+                <a class="menu-button" href="#">TRÁNG MIỆNG</a>
+            </div>
+        </div>
+        <div class="main-content">
+        <!-- Content for main section goes here -->
+        </div>
+    </div>
+    
+  
+        
+{% endblock %}
+
+</body>
+
+<script>
+    $(document).ready(function() {
+        $('.menu-button').click(function() {
+            $('.menu-button').removeClass('active');
+            $(this).addClass('active');
+        });
+    });
+</script>
+
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        grid-gap: 20px;
+    }
+
+    .sidebar {
+        padding: 20px;
+        border: 1px solid rgb(80, 76, 76);
+        border-radius: 20px;
+        height: 100vh;
+        background-color: rgb(80, 76, 76);
+    }
+
+    .main-content {
+        padding: 20px;
+        border: 1px solid rgb(80, 76, 76);
+        border-radius: 20px;
+        height: 100vh;
+        background-color: rgb(80, 76, 76);
+    }
+
+    .button-container {
+        width: 100%;
+        position: relative;
+        text-decoration: none;
+        border-bottom: 2px solid gray;
+        margin-bottom: 10px;
+    }
+
+    .button-container::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 0;
+        height: 2px;
+        background-color: white;
+        transition: width 0.2s ease, left 0.2s ease;
+    }
+
+    .button-container:hover::after {
+        width: 100%;
+        left: 0;
+    }
+
+    .menu-button {
+        display: inline-block;
+        padding: 10px 20px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        color: gray;
+        text-decoration: none;
+        font-size: 18px;
+        transition: background-color 0.5s ease, color 0.5s ease;
+        cursor: pointer;
+    }
+
+    .menu-button:hover {
+        border: 2px solid gray;
+        border-bottom: none;
+        background-color: #fff;
+        color: #000;
+    }
+
+    .active {
+        background-color: #f50057;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border: 2px solid gray;
+        border-bottom: none;
+        background-color: #fff;
+        color: #000;
+    }
+
+</style>
+
+</html>

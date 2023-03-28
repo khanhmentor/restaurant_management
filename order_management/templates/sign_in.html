@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+
 <body>
   
 {% block content %}
@@ -29,6 +33,16 @@
 </form>
 {% endblock %}
 
+<button id="view_menu">View menu</button>
+
 </body>
+
+<script>
+  $(document).ready(function() {
+    $('#view_menu').click(function() {
+      window.location.href = window.location.origin + '/view_menu/'
+    });
+  });
+</script>
 
 </html>

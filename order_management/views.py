@@ -1,11 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Employee, Table, Customer, Order, Emp_Order, MenuItem, Status, OrderItem
+from .models import Employee, Table, Customer, Order, Emp_Order, MenuType, MenuItem, Status, OrderItem
 from django.contrib import messages
 
 # Create your views here.
 
+# https://www.universalorlando.com/web/en/us/things-to-do/dining/three-broomsticks/menu.html
+
 def view_menu(request):
-    return render(request, 'view_menu.html')
+    context = {
+        'menu_types': MenuType.objects.all()
+    }
+    return render(request, 'view_menu.html', context)
 
 def local_host(request):
     return redirect('home_page', 0)

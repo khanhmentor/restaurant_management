@@ -57,8 +57,12 @@ class Emp_Order(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     emp = models.ForeignKey(Employee, on_delete=models.CASCADE)
 
+class MenuType(models.Model):
+    name = models.CharField(max_length=255)
+
 class MenuItem(models.Model):
     name = models.CharField(max_length=255)
+    type = models.ForeignKey(MenuType, on_delete=models.CASCADE, default=0)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     is_available = models.BooleanField(default=True)

@@ -10,10 +10,10 @@
 <body>
     <div class="navbar">
         <a href="#">
-        <img src="logo.png" alt="Logo" width="100px" height="auto">
+        <img src='{% static "photo/logo.jpg" %}' alt="Logo" width="100px" height="auto">
         </a>
         <ul>
-        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Home</a></li>
         <li><a href="#">Menu</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#">Contact</a></li>
@@ -22,24 +22,11 @@
     <div class="grid-container">
         <div class="left-div"></div>
         <div class="sidebar">
-            <div class="button-container">
-                <a class="menu-button" href="#">KHAI VỊ</a>
-            </div>
-            <div class="button-container">
-                <a class="menu-button" href="#">SÚP &amp; SALAD</a>
-            </div>
-            <div class="button-container">
-                <a class="menu-button" href="#">MÓN CHÍNH</a>
-            </div>
-            <div class="button-container">
-                <a class="menu-button" href="#">THỨC UỐNG</a>
-            </div>
-            <div class="button-container">
-                <a class="menu-button" href="#">RƯỢU</a>
-            </div>
-            <div class="button-container">
-                <a class="menu-button" href="#">TRÁNG MIỆNG</a>
-            </div>
+            {% for type in menu_types %}
+                <div class="button-container">
+                    <a class="menu-button" href="#">{{ type.name }}</a>
+                </div>
+            {% endfor %}
         </div>
         <div class="main-content">
             <table class="dishes-container">
@@ -63,14 +50,10 @@
             $('.menu-button').removeClass('active');
             $(this).addClass('active');
         });
-        $('nav ul li').hover(
-            function() {
-                $(this).children('ul').slideDown(200);
-            },
-            function() {
-                $(this).children('ul').slideUp(200);
-            }
-        );
+        $('.navbar ul li a').click(function() {
+            $('.navbar ul li a').removeClass('active');
+            $(this).addClass('active');
+        });
     });
 </script>
 
@@ -85,7 +68,7 @@
     }
 
     .grid-container {
-        margin-top: 100px;
+        margin-top: 120px;
         display: grid;
         grid-template-columns: repeat(10, 1fr);
         grid-gap: 20px;
@@ -158,12 +141,10 @@
     }
 
     .active {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
         border: 2px solid gray;
         border-bottom: none;
         background-color: white;
-        color: #000;
+        color: #000 !important;
     }
 
     .active::after {
@@ -202,7 +183,7 @@
 
     .navbar {
         background-color: rgb(80, 76, 76);
-        height: 80px;
+        height: auto;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -215,7 +196,6 @@
         z-index: 999;
     }
 
-      /* Style for the navigation links */
     .navbar ul {
         list-style-type: none;
         margin: 0;
@@ -232,18 +212,19 @@
         text-decoration: none;
         font-size: 16px;
         font-weight: 500;
-        color: #333;
+        color: gray;
         padding: 10px 15px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     }
 
     .navbar ul li a:hover {
-        color: #ff9800;
+        border: 2px solid gray;
+        border-bottom: none;
+        background-color: white;
+        color: #000;
     }
 
-    .navbar ul li.active a {
-        color: #ff9800;
-        border-bottom: 2px solid #ff9800;
-    }
 
 
 </style>

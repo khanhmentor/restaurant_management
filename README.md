@@ -25,6 +25,12 @@
 ####    `status = Status(name=i)`
 ####    `status.save()`
 
+#### `a = ['THE GREAT FEAST', 'MAIN COURSES', 'SALADS', "CHILDREN'S MENU", 'SIDE ITEMS', 'DESSERTS', 'BEVERAGES', 'DRAUGHT BEERS']`
+
+#### `for i in a:`
+####    `menu_type = MenuType(name=i)`
+####    `menu_type.save()`
+
 #### `menu_item = MenuItem(name='cookie', description='delicious', price=5, is_available=True)`
 #### `menu_item.save()`
 #### `menu_item = MenuItem(name='biscuit', description='fantastic', price=12, is_available=True)`

@@ -65,6 +65,7 @@ class MenuItem(models.Model):
     type = models.ForeignKey(MenuType, on_delete=models.CASCADE, default=0)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
+    photo = models.TextField(blank=True)
     is_available = models.BooleanField(default=True)
 
     def __str__(self):

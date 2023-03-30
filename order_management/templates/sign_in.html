@@ -32,6 +32,7 @@
   <button type="submit" class="btn btn-primary">Sign In</button>
 </form>
 {% endblock %}
+<br>
 
 <button id="view_menu">View menu</button>
 
@@ -40,7 +41,7 @@
 <script>
   $(document).ready(function() {
     $('#view_menu').click(function() {
-      window.location.href = window.location.origin + '/view_menu/'
+      window.location.href = window.location.origin + '/menu/0/'
     });
   });
 </script>

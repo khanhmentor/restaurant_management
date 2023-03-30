@@ -4,12 +4,29 @@ from django.contrib import messages
 
 # Create your views here.
 
-def view_menu(request):
+def view_menu(request, type_id):
+    starting_type = MenuType.objects.all()[0]
+    starting_menu = MenuItem.objects.all().filter(type=starting_type)
+
+    if type_id != 0:
+        new_type = get_object_or_404(MenuType, id=type_id)
+        new_menu = MenuItem.objects.all().filter(type=new_type)
+        context = {
+            'menu_types': MenuType.objects.all(),
+            'menu_items': new_menu,
+            'current_type_id': type_id
+        }
+        return render(request, 'view_menu.html', context)
+
     context = {
         'menu_types': MenuType.objects.all(),
-        'menu_items': MenuItem.objects.all()
+        'menu_items': starting_menu,
+        'current_type_id': starting_type.id
     }
     return render(request, 'view_menu.html', context)
+
+def about(request):
+    return render(request, 'about.html')
 
 def local_host(request):
     return redirect('home_page', 0)

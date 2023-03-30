@@ -1,0 +1,305 @@
+body {
+    background-image: url('../photo/wizarding-world.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+/*--------------------*/
+/*navbar*/
+
+.navbar {
+    background-color: rgb(80, 76, 76);
+    min-height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.navbar ul li {
+    margin-right: 25px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: gray;
+    padding: 10px 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.navbar ul li a:hover {
+    border: 2px solid gray;
+    border-bottom: none;
+    background-color: white;
+    color: #000;
+}
+
+/*--------------------*/
+/*content*/
+
+.grid-container {
+    margin-top: 150px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-gap: 20px;
+}
+
+.sidebar {
+    grid-column: 2 / 4;
+    padding: 20px;
+    border: 1px solid rgb(80, 76, 76);
+    border-radius: 20px;
+    min-height: 60vh;
+    background-color: rgb(80, 76, 76);
+}
+
+.main-content {
+    grid-column: 4 / 10;
+    padding: 0;
+    border: 1px solid rgb(80, 76, 76);
+    border-radius: 20px;
+    min-height: 60vh;
+    background-color: rgb(80, 76, 76);
+}
+
+.button-container {
+    width: 100%;
+    position: relative;
+    text-decoration: none;
+    border-bottom: 2px solid gray;
+    margin-bottom: 10px;
+}
+
+.button-container::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.2s ease, left 0.2s ease;
+}
+
+.button-container:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.menu-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: gray;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    cursor: pointer;
+}
+
+.menu-button:hover {
+    border: 2px solid gray;
+    border-bottom: none;
+    background-color: white;
+    color: #000;
+}
+
+.active {
+    border: 2px solid gray;
+    border-bottom: none;
+    background-color: white;
+    color: #000 !important;
+}
+
+.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+}
+
+.dishes-container {
+    display: inline-block;
+    background-color: white;
+    border-radius: 5px;
+    color: rgb(120, 49, 49);
+    text-align: center;
+    width: 200px;
+    margin: 0 auto;
+}
+
+.tasty-dishes {
+    width: 100%;
+    height: auto;
+    filter: contrast(1.1) brightness(0.9) saturate(1.1);
+    border-radius: 5px;
+}
+
+.tasty-dishes:hover {
+    filter: contrast(1.2) brightness(0.8) saturate(1.2);
+}
+
+.logo {
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li td {
+    height: 3vh;
+}
+
+ul li td a {
+    color: rgb(28, 28, 191)
+}
+
+ul li td a:hover {
+    text-decoration: underline;
+}
+
+.circulus-img {
+    border-radius: 50%;
+}
+
+.center-table {
+    margin: 0 auto;
+}
+
+.center{
+    margin: 0 auto;
+    max-width: 768px;
+    text-align: center;
+}
+
+/*--------------------*/
+/*change-image*/
+
+.image-gallery {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+}
+
+.image-gallery img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.image-gallery img.active-img {
+opacity: 1;
+}
+
+.dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.dots span {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: gray;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.dots span.active-dot {
+    background-color: white;
+}
+
+/* For screens with a maximum width of 480px */
+@media only screen and (max-width: 480px) {
+    
+}
+
+/* For screens with a maximum width of 768px */
+@media only screen and (max-width: 768px) {
+  
+}
+
+/* For screens with a minimum width of 769px and maximum width of 1024px */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+    
+}
+
+/* For screens with a minimum width of 1025px */
+@media only screen and (min-width: 1025px) {
+   
+
+}
+
+/* For screens with a minimum width of 1200px and maximum width of 1400px */
+@media only screen and (min-width: 1200px) and (max-width: 1400px) {
+    .sidebar a{
+        font-size: 16px;
+    }
+
+    .navbar {
+        padding: 0 60px;
+    }
+    
+    .navbar ul li {
+        margin-right: 30px;
+    }
+    
+    .navbar ul li a {
+        font-size: 16px;
+        padding: 10px 15px;
+    }
+}
+
+
+/* For screens with a minimum width of 1600px */
+@media only screen and (min-width: 1600px) {
+    
+    .sidebar {
+        font-size: 20px;
+    }
+
+    .navbar {
+        padding: 0 100px;
+    }
+    
+    .navbar ul li {
+        margin-right: 50px;
+    }
+    
+    .navbar ul li a {
+        font-size: 20px;
+        padding: 15px 20px;
+    }
+}

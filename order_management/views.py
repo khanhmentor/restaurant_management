@@ -4,11 +4,10 @@ from django.contrib import messages
 
 # Create your views here.
 
-# https://www.universalorlando.com/web/en/us/things-to-do/dining/three-broomsticks/menu.html
-
 def view_menu(request):
     context = {
-        'menu_types': MenuType.objects.all()
+        'menu_types': MenuType.objects.all(),
+        'menu_items': MenuItem.objects.all()
     }
     return render(request, 'view_menu.html', context)
 

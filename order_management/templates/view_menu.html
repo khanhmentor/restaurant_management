@@ -24,21 +24,23 @@
         <div class="sidebar">
             {% for type in menu_types %}
                 <div class="button-container">
-                    <a class="menu-button" href="#">{{ type.name }}</a>
+                    <a class="menu-button" data-id="{{ type.id }}">{{ type.name }}</a>
                 </div>
             {% endfor %}
         </div>
         <div class="main-content">
-            <table class="dishes-container">
-                <tr>
-                    <td>
-                        <img class="tasty-dishes" src="https://img.buzzfeed.com/buzzfeed-static/static/2022-12/1/22/asset/3435da075303/sub-buzz-645-1669934371-89.jpg?downsize=900:*&output-format=auto&output-quality=auto" alt="Example image">
-                    </td>
-                </tr>
-                <tr>
-                    <td>One-Pot Lemon Garlic Shrimp Pasta</td>
-                </tr>
-            </table>
+            {% for item in menu_items %}
+                    <table class="dishes-container">
+                        <tr>
+                            <td>
+                                <img class="tasty-dishes" src="https://img.buzzfeed.com/buzzfeed-static/static/2022-12/1/22/asset/3435da075303/sub-buzz-645-1669934371-89.jpg?downsize=900:*&output-format=auto&output-quality=auto" alt="Example image">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ item.name }}</td>
+                        </tr>
+                    </table>
+            {% endfor %}
         </div>
         <div class="right-div"></div>
     </div>       
@@ -49,6 +51,7 @@
         $('.menu-button').click(function() {
             $('.menu-button').removeClass('active');
             $(this).addClass('active');
+            id = $(this).attr('id')
         });
         $('.navbar ul li a').click(function() {
             $('.navbar ul li a').removeClass('active');
@@ -167,16 +170,12 @@
     .tasty-dishes {
         width: 300px;
         height: 200px;
-        background: url('example.jpg') no-repeat center center fixed;
-        background-size: cover;
         filter: contrast(1.1) brightness(0.9) saturate(1.1);
-        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.25)), url('example.jpg');
         border-radius: 5px;
     }
 
     .tasty-dishes:hover {
         filter: contrast(1.2) brightness(0.8) saturate(1.2);
-        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.35)), url('example.jpg');
     }
 
     /*--------------------*/
@@ -224,8 +223,6 @@
         background-color: white;
         color: #000;
     }
-
-
 
 </style>
 

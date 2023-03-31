@@ -68,7 +68,8 @@ body {
     padding: 20px;
     border: 1px solid rgb(80, 76, 76);
     border-radius: 20px;
-    min-height: 60vh;
+    min-height: 80vh;
+    max-height: 100vh;
     background-color: rgb(80, 76, 76);
 }
 
@@ -77,8 +78,10 @@ body {
     padding: 0;
     border: 1px solid rgb(80, 76, 76);
     border-radius: 20px;
-    min-height: 60vh;
+    min-height: 80vh;
+    max-height: 100vh;
     background-color: rgb(80, 76, 76);
+    overflow-y: scroll;
 }
 
 .button-container {
@@ -240,66 +243,4 @@ opacity: 1;
 .dots span.active-dot {
     background-color: white;
 }
-
-/* For screens with a maximum width of 480px */
-@media only screen and (max-width: 480px) {
-    
-}
-
-/* For screens with a maximum width of 768px */
-@media only screen and (max-width: 768px) {
   
-}
-
-/* For screens with a minimum width of 769px and maximum width of 1024px */
-@media only screen and (min-width: 769px) and (max-width: 1024px) {
-    
-}
-
-/* For screens with a minimum width of 1025px */
-@media only screen and (min-width: 1025px) {
-   
-
-}
-
-/* For screens with a minimum width of 1200px and maximum width of 1400px */
-@media only screen and (min-width: 1200px) and (max-width: 1400px) {
-    .sidebar a{
-        font-size: 16px;
-    }
-
-    .navbar {
-        padding: 0 60px;
-    }
-    
-    .navbar ul li {
-        margin-right: 30px;
-    }
-    
-    .navbar ul li a {
-        font-size: 16px;
-        padding: 10px 15px;
-    }
-}
-
-
-/* For screens with a minimum width of 1600px */
-@media only screen and (min-width: 1600px) {
-    
-    .sidebar {
-        font-size: 20px;
-    }
-
-    .navbar {
-        padding: 0 100px;
-    }
-    
-    .navbar ul li {
-        margin-right: 50px;
-    }
-    
-    .navbar ul li a {
-        font-size: 20px;
-        padding: 15px 20px;
-    }
-}

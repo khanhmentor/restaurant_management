@@ -1,10 +1,25 @@
+from .models import Employee, Table, Customer, Order, Emp_Order, MenuType, MenuItem, Status, OrderItem, TempItem
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Employee, Table, Customer, Order, Emp_Order, MenuType, MenuItem, Status, OrderItem
+from django.utils.datastructures import MultiValueDictKeyError
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 
 # Create your views here.
 
-def view_menu(request, type_id):
+def insert(request, type_id, order, order_id):
+    if request.method == 'POST':
+        item_id = request.POST['item-id']
+        quantity = int(request.POST['quantity'])
+        note = request.POST['note']
+        menu_item = get_object_or_404(MenuItem, id=item_id)
+        status = get_object_or_404(Status, id=1)
+        temp_items = TempItem.objects.create(order=order, menu=menu_item, quantity=quantity, note=note, status=status)
+        temp_items.get_subtotal_cost()
+        temp_items.save()
+        return redirect('view_menu', type_id, order_id)
+
+def view_menu(request, type_id, order_id):
+    order = get_object_or_404(Order, id=order_id)
     starting_type = MenuType.objects.all()[0]
     starting_menu = MenuItem.objects.all().filter(type=starting_type)
 
@@ -12,21 +27,68 @@ def view_menu(request, type_id):
         new_type = get_object_or_404(MenuType, id=type_id)
         new_menu = MenuItem.objects.all().filter(type=new_type)
         context = {
+            'order_id': order_id,
             'menu_types': MenuType.objects.all(),
             'menu_items': new_menu,
             'current_type_id': type_id
         }
+        insert(request, type_id, order, order_id)
+
         return render(request, 'view_menu.html', context)
+    
+    insert(request, type_id, order, order_id)
 
     context = {
+        'order_id': order_id,
         'menu_types': MenuType.objects.all(),
         'menu_items': starting_menu,
         'current_type_id': starting_type.id
     }
     return render(request, 'view_menu.html', context)
 
-def about(request):
-    return render(request, 'about.html')
+def about(request, order_id):
+    starting_type = MenuType.objects.all()[0]
+
+    context = {
+        'order_id': order_id,
+        'current_type_id': starting_type.id
+    }
+    return render(request, 'about.html', context)
+
+@csrf_exempt
+def view_cart(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    starting_type = MenuType.objects.all()[0]
+    temp_items = TempItem.objects.all().filter(order=order)
+
+    if request.method == 'POST':
+        if (request.POST['form_name'] == "Confirmed"):
+            for temp_item in temp_items:
+                order_item = OrderItem()
+                order_item.order = temp_item.order
+                order_item.menu = temp_item.menu
+                order_item.quantity = temp_item.quantity
+                order_item.note = temp_item.note
+                order_item.status = temp_item.status
+                order_item.get_subtotal_cost()
+                order_item.save()
+            temp_items.delete()
+        else:
+            item_id = request.POST['item-id']
+            quantity = int(request.POST['quantity'])
+            note = request.POST['note']
+            temp_item = get_object_or_404(TempItem, id=item_id)
+            temp_item.quantity = quantity
+            temp_item.note = note
+            temp_item.get_subtotal_cost()
+            temp_item.save()
+
+    context = {
+        'order': order,
+        'temp_items': temp_items,
+        'current_type_id': starting_type.id,
+    }
+    return render(request, 'view_cart.html', context)
 
 def local_host(request):
     return redirect('home_page', 0)

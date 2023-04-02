@@ -92,3 +92,19 @@ class OrderItem(models.Model):
         sub_total = self.menu.price * self.quantity
         self.sub_total_cost = sub_total
         self.save()
+
+class TempItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    menu = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    note = models.CharField(max_length=255, default='None')
+    sub_total_cost = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.quantity} x {self.menu.name}'
+    
+    def get_subtotal_cost(self):
+        sub_total = self.menu.price * self.quantity
+        self.sub_total_cost = sub_total
+        self.save()

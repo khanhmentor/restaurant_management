@@ -44,6 +44,9 @@
 </form>
 {% endblock %}
 
+<br>
+<button id="view_menu">View menu</button>
+
 </body>
 
 <script>
@@ -51,6 +54,10 @@
         $('#menu_item').change(function() {
             description = $(this).find(':selected').data('description');
             $('#item_description').text(description);
+        });
+
+        $('#view_menu').click(function() {
+            window.location.href = window.location.origin + '/menu/0/' + '{{ order.id }}'
         });
     });
 </script>

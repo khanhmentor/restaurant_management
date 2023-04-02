@@ -4,6 +4,7 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <link rel="stylesheet" href="{% static 'src/myStyle.css' %}">
     <script src="{% static 'src/myScript.js' %}"></script>
@@ -17,13 +18,13 @@
             <li><a id="menu">Menu</a></li>
             <li><a id="about">About</a></li>
             <li><a id="contact">Contact</a></li>
-            <li><a id="card">Card</a></li>
+            <li><a id="cart">Cart</a></li>
         </ul>
     </div>
     <div class="grid-container">
         <div class="main-content">
             <div class="logo">
-                <img class="circulus-img" src = '{% static "photo/logo.jpg" %}' alt="Logo" width="200" height="auto">
+                <img class="circulus-img" src = '{% static "photo/logo.jpg" %}' alt="Logo" width="200px" height="auto">
                 <h1>Three Broomsticks™</h1>
             </div>
             <div class="content">
@@ -187,17 +188,60 @@
                 </div>
             </div>
             <div class="image-gallery">
-                <img class="active-img" src='{% static "photo/about_background.jpg" %}' alt="image1" width="100%" height="auto">
-                <img src='{% static "photo/about_background2.jpg" %}' alt="image2" width="100%" height="auto">
-                <img src='{% static "photo/about_background3.jpg" %}' alt="image3" width="100%" height="auto">
+                <img class="active-img" src='{% static "photo/about_background.jpg" %}' alt="image1" width="100%" height="auto"/>
+                <img src='{% static "photo/about_background2.jpg" %}' alt="image2" width="100%" height="auto"/>
+                <img src='{% static "photo/about_background3.jpg" %}' alt="image3" width="100%" height="auto"/>
             </div>
             <div class="dots">
                 <span class="dot active-dot"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>
             </div>
+            <div class="map">
+                <table>
+                    <tr>
+                        <td class="map-container">
+                            <img src='{% static "photo/map.jpg" %}' alt="map" width="100%" height="auto"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="logo-container">
+                                <tr>
+                                    <td class="raven-logo" rowspan="4">
+                                        <img src='{% static "photo/raven-logo.jpg" %}' alt="raven-logo" width="100%" height="auto"/>
+                                    </td>
+                                    <td class="location"><h2>Location</h2></td>
+                                    <td class="park"><h2>Park Hours</h2></td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2">
+                                        <p>The Wizarding World of Harry Potter™ – Hogsmeade™ in <a>Universal’s Islands of Adventure</a></p>
+                                    </td>
+                                    <td>
+                                        <p>Open Today | 8 am-6 pm</p>
+                                        <a>All Park Hours</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="space"></td>
+                                </tr>
+                                <tr>
+                                    <td><a>Explore Interactive Map</a></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>       
 </body>
+
+<script>
+    var current_type_id = "{{ current_type_id }}";
+    var order_id = "{{ order_id }}"
+</script>
 
 </html>

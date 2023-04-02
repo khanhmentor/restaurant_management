@@ -11,16 +11,40 @@
 </head>
 
 <body>
+    <div class="modal">
+        <div class="modal-content"></div>
+        <table class="quantity">
+            <td class="add">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>                  
+            </td>
+            <td class="quantity-field"></td>
+            <td class="minus">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>            
+            </td>
+        </table>
+        <textarea placeholder="Note"></textarea>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="number" id="item-id" name="item-id" class="form-control"/>
+            <input type="number" id="quantity" name="quantity" class="form-control"/>
+            <input type="text" id="note" name="note" class="form-control"/>    
+        </form>
+        <button class="button">Add</button>
+    </div>
+    <div class="overlay"></div>
     <div class="navbar">
-        <a href="#">
-        <img src='{% static "photo/logo.jpg" %}' alt="Logo" width="100px" height="auto">
-        </a>
+        <img class="circulus-img" src='{% static "photo/logo2.jpg" %}' alt="Logo" width="100px" height="auto">
         <ul>
             <li><a id="photo">Photo</a></li>
             <li><a id="menu">Menu</a></li>
             <li><a id="about">About</a></li>
             <li><a id="contact">Contact</a></li>
-            <li><a id="card">Card</a></li>
+            <li><a id="cart">Cart</a></li>
         </ul>
     </div>
     <div class="grid-container">
@@ -33,7 +57,7 @@
         </div>
         <div class="main-content">
             {% for item in menu_items %}
-                    <table class="dishes-container">
+                    <table class="dishes-container"  id="{{ item.id }}">
                         <tr>
                             <td>
                                 <img class="tasty-dishes" src="{% static 'photo/' %}{{ item.photo }}" alt="Example image">
@@ -45,12 +69,12 @@
                     </table>
             {% endfor %}
         </div>
-    </div>      
+    </div>   
 </body>
 
 <script>
     var current_type_id = "{{ current_type_id }}";
-    var menu_items = "{{ menu_items }}"
+    var order_id = "{{ order_id }}"
 </script>
 
 </html>

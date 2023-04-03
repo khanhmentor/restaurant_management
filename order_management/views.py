@@ -1,6 +1,5 @@
 from .models import Employee, Table, Customer, Order, Emp_Order, MenuType, MenuItem, Status, OrderItem, TempItem
 from django.shortcuts import render, get_object_or_404, redirect
-from django.utils.datastructures import MultiValueDictKeyError
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 
@@ -20,6 +19,10 @@ def insert(request, type_id, order, order_id):
 
 def view_menu(request, type_id, order_id):
     order = get_object_or_404(Order, id=order_id)
+    emp_orders = Emp_Order.objects.all().filter(order=order)
+
+    if request.session.session_key not in [emp_order.emp.session_id for emp_order in emp_orders if emp_order.emp.session_id != None]:
+        return redirect('none_of_your_bussiness')
     starting_type = MenuType.objects.all()[0]
     starting_menu = MenuItem.objects.all().filter(type=starting_type)
 

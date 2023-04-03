@@ -85,7 +85,7 @@ $(document).ready(function() {
         $(this).addClass('active');
         id = $(this).attr('id');
         if (id == 'menu')
-            window.location.href = window.location.origin + '/menu/0/' + order_id  ;  
+            window.location.href = window.location.origin + '/menu/0/' + order_id;  
         else 
             window.location.href = window.location.origin + '/' + id + '/' + order_id;
     });
@@ -116,7 +116,15 @@ $(document).ready(function() {
     });
 
     if (current_page == 'cart')
-        alert()
+        if ($('.payment-field h1 span').text() == '0')
+            $('.payment-field h1').text("You don't have any item!"),
+            $('.main-content .button').text('Order some?'),
+            $('.main-content .button').click(function() {
+                $(this).addClass('move-right'),
+                setTimeout(function() {
+                    window.location.href = window.location.origin + '/menu/0/' + order_id;  
+                }, 1000);
+            });
 
     if ($('.info .data .sub-field').length > 0) {
 

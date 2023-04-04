@@ -304,7 +304,7 @@ def view_item(request, emp_id):
         new_status_id = request.POST['new_status_id']
         item = get_object_or_404(OrderItem, id=item_id)
         new_status = get_object_or_404(Status, id=new_status_id)
-        
+
         if new_status.name == 'denied':
             item.menu.is_available = False
             item.menu.save()

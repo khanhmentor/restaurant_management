@@ -7,7 +7,7 @@
 - ### `py manage.py shell` (`python3 manage.py shell`)
 - ### type the below in shell:
 
-#### `from order_management.models import Employee, Status, MenuItem, Table`
+#### `from order_management.models import Employee, Status, MenuItem, MenuType, Table`
 
 #### `a = ['waiter', 'waiter1', 'cook', 'manager']`
 

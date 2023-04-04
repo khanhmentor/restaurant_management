@@ -15,44 +15,44 @@
     <body>
         <div class="order">
             {% block content %}
-            <h1>Update Menu</h1>
-            <form method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                <label for="menu_item">Menu Item:</label>
-                <select name="menu_item_id" id="menu_item" class="form-control">
-                    {% for item in menu_items %}
-                    <option value="{{ item.id }}" data-description="{{ item.description }}" data-price="{{ item.price }}" data-is_available="{{ item.is_available }}">{{ item.name }}</option>
-                    {% endfor %}
-                </select>
-                </div>
-                <div class="form-group">
-                <table class="des-field">
-                    <td class="label">
-                        <label for="item_description">Desciption:</label>
-                    </td>
-                    <td class="textarea">
-                        <textarea name="item_description" id="item_description" rows="4" cols="50" readonly>{{ menu_items.0.description }}</textarea>
-                    </td>
-                </table>
-                <label for="price">Price:</label>
-                <input type="number" name="price" id="price" class="form-control" value="{{ menu_items.0.price }}" readonly>
-                <br>
-                <label for="is_available">Is Available:</label>
-                <select name="is_available" id="is_available" class="form-control">
-                    <option>True</option>
-                    <option>False</option>
-                </select>
-                </div>
+                <h1>Update Menu</h1>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                    <label for="menu_item">Menu Item:</label>
+                    <select name="menu_item_id" id="menu_item" class="form-control">
+                        {% for item in menu_items %}
+                        <option value="{{ item.id }}" data-description="{{ item.description }}" data-price="{{ item.price }}" data-is_available="{{ item.is_available }}">{{ item.name }}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                    <div class="form-group">
+                    <table class="des-field">
+                        <td class="label">
+                            <label for="item_description">Desciption:</label>
+                        </td>
+                        <td class="textarea">
+                            <textarea name="item_description" id="item_description" rows="4" cols="50" readonly>{{ menu_items.0.description }}</textarea>
+                        </td>
+                    </table>
+                    <label for="price">Price:</label>
+                    <input type="number" name="price" id="price" class="form-control" value="{{ menu_items.0.price }}" readonly>
+                    <br>
+                    <label for="is_available">Is Available:</label>
+                    <select name="is_available" id="is_available" class="form-control">
+                        <option>True</option>
+                        <option>False</option>
+                    </select>
+                    </div>
+                    <button type="submit" class="button">Update</button>
+                </form>
                 {% if messages %}
                     {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
+                    <div class="message">
                         {{ message }}
                     </div>
                     {% endfor %}
                 {% endif %}
-                <button type="submit" class="button">Update</button>
-            </form>
             {% endblock %}
         </div>
     </body>

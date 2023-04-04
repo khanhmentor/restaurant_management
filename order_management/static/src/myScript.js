@@ -28,10 +28,12 @@ $(document).ready(function() {
             if (emp_role != 'cook')
                 $('#update_menu').hide(),
                 $('#view_item_list').hide();
+
             if ($.inArray(emp_role, ['waiter', 'manager']) < 0) 
                 $('#new_order').hide(),
                 $('#view_order').hide(),
                 $('#sign_out').css('margin-left', '5px');
+
             $("#new_order").click(function(){
                 window.location.href = window.location.pathname + 'order/';
             });
@@ -126,13 +128,16 @@ $(document).ready(function() {
                 $("#add").hide(),
                 $(".update").hide(),
                 $("#complete").hide()
+
             $("#add").click(function(){
                 window.location.href = window.location.pathname + 'add_item/';
             });
+
             $(".update").click(function(){
                 id = $(this).attr('id')
                 window.location.href = window.location.pathname + 'update_item/' + id;
             });
+
             $("#complete").click(function(){
                 window.location.href = window.location.pathname + 'complete/';
             });
@@ -158,13 +163,12 @@ $(document).ready(function() {
                 else 
                     $('#quantity').val(1);
             });
+
             $('#cancel').click(function(e) {
                 e.preventDefault();
                 window.location.href = window.location.pathname + 'cancel/';
             });
         },
-        
-        /*Cook*/
         
         'update_menu': function() {
             $('#is_available').val($('#menu_item').find(':selected').data('is_available'));
@@ -176,8 +180,26 @@ $(document).ready(function() {
                 $('#price').val(price);
                 $('#is_available').val(is_available);
             });
+
+            $('.order .button').click(function(e) {
+                e.preventDefault();
+                $(this).addClass('move-right');
+                setTimeout(function() {
+                    $('.order form').submit();
+                }, 1000);
+            });
         },
 
+        'item_list': function() {
+            $('.order .button').click(function(e) {
+                e.preventDefault();
+                id = $(this).parent().attr('id')
+                $(this).addClass('move-right');
+                setTimeout(function() {
+                    $('.order #' + id).submit();
+                }, 1000);
+            });
+        },
 
         /*Customer*/
 

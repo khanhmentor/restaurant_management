@@ -19,35 +19,42 @@
                 {% for item in item_list %}
                 <table>
                     <tr>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Note</th>
-                        <th>Status</th>
+                        <td>
+                            <label>Item name:</label>
+                            {{ item.menu.name }}
+                        </td>
                     </tr>
                     <tr>
-                        <td>{{ item.menu.name }}</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>{{ item.note }}</td>
                         <td>
-                            <form method="POST">
+                            <label>Quantity:</label>
+                            {{ item.quantity }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="note-field">
+                                <td class="label">
+                                    <label for="note">Note:</label>
+                                </td>
+                                <td class="textarea">
+                                    <textarea name="note" id="note" rows="4" cols="50" readonly></textarea>
+                                </td>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form id="f-{{ item.id }}" method="POST">
                                 {% csrf_token %}
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <div class="form-group">
-                                                <select name="new_status_id" id="new_status" class="form-control">
-                                                    {% for st in status %}
-                                                    <option value="{{ st.id }}"{% if st.id == item.status.id %}selected{% endif %}>{{ st.name }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button type="submit" class="button">Update</button>
-                                            <input type="hidden" name="item_id" value="{{ item.id }}" readonly>
-                                        </td>
-                                    </tr>
-                                </table>        
+                                <div class="form-group">
+                                    <select name="new_status_id" id="new_status" class="form-control">
+                                        {% for st in status %}
+                                        <option value="{{ st.id }}"{% if st.id == item.status.id %}selected{% endif %}>{{ st.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <button type="submit" class="button">Update</button>
+                                <input type="hidden" name="item_id" value="{{ item.id }}" readonly>
                             </form>
                         </td>
                     </tr>
@@ -63,4 +70,5 @@
             {% endblock %}
         </div>
     </body>
+    
 </html>

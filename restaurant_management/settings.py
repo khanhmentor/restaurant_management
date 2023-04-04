@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-sx3rq1%6d^cs09%c@dlcu1gu=7-elcp%%)92^_hr_5qubv%&m@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True # DEBUG = FALSE
+DEBUG = False # DEBUG = FALSE
 
 ALLOWED_HOSTS = []
 
@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'order_management',
-    'order_management.templatetags'
 ]
 
 MIDDLEWARE = [
@@ -127,7 +126,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'frontend/build/static')
-# ]

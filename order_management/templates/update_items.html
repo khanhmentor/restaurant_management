@@ -1,59 +1,48 @@
+{% load static %} 
+
 <!DOCTYPE html>
-<html>
-
-<head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Item</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'src/myStyle.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-</head>
-
-<body>
-  
-{% block content %}
-<h1>Update Item</h1>
-<form method="POST">
-    {% csrf_token %}
-    <div class="form-group">
-    <label for="menu_item">Item Name:</label>
-    <select name="menu_item_id" id="menu_item" class="form-control">
-        {% for item in menu_items %}
-        <option value="{{ item.id }}"{% if item.id == this_item.menu_item.id %}selected{% endif %} data-quantity="{{ this_item.quantity }}">{{ item.name }}</option>
-        {% endfor %}
-    </select>
-    </div>
-    <div class="form-group">
-    <table>
-        <td>
-            <label for="note">Note:</label>
-        </td>
-        <td>
-            <textarea name="note" id="note" rows="4" cols="50">{{ this_item.note }}</textarea>
-        </td>
-    </table>
-    <label for="quantity">Quantity:</label>
-    <input type="number" name="quantity" id="quantity" class="form-control" value="{{ this_item.quantity }}" min="1">
-    </div>
-    <br>
-    <button type="submit" class="btn btn-primary">Update</button>
-</form>
-{% endblock %}
-
-<br>
-<button id="cancel">Cancel</button>
-
-</body>
-
-<script>
-    $(document).ready(function() {
-        $('#menu_item').change(function() {
-            if ($('#menu_item').val() == '{{ this_item.menu.id }}')
-                quantity = $(this).find(':selected').data('quantity'),
-                $('#quantity').val(quantity);
-            else 
-                $('#quantity').val(1);
-        });
-        $('#cancel').click(function() {
-            window.location.href = window.location.pathname + 'cancel/';
-        });
-    });
-</script>
-
+    <script src="{% static 'src/myScript.js' %}"></script>
+  </head>
+    <body>
+        <div class="order">
+            {% block content %}
+            <h1>Update Item</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                <label for="menu_item">Item Name:</label>
+                <select name="menu_item_id" id="menu_item" class="form-control">
+                    {% for item in menu_items %}
+                    <option value="{{ item.id }}"{% if item.id == this_item.menu_item.id %}selected{% endif %} data-quantity="{{ this_item.quantity }}">{{ item.name }}</option>
+                    {% endfor %}
+                </select>
+                </div>
+                <div class="form-group">
+                <table class="note-field">
+                    <td class="label">
+                        <label for="note">Note:</label>
+                    </td>
+                    <td class="textarea">
+                        <textarea name="note" id="note" rows="4" cols="50">{{ this_item.note }}</textarea>
+                    </td>
+                </table>
+                <label for="quantity">Quantity:</label>
+                <input type="number" name="quantity" id="quantity" class="form-control" value="{{ this_item.quantity }}" min="1">
+                </div>
+                <br>
+                <button type="submit" class="button">Update</button>
+                <button class="button" id="cancel">Cancel</button>
+            </form>
+            {% endblock %}
+        </div>
+    </body>
 </html>

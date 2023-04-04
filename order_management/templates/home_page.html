@@ -14,17 +14,39 @@
   </head>
 
   <body>
-    
-  <h1>Hello {{ emp.username }}</h1>
-
-  <button id="new_order">New Order</button>
-  <button id="view_order">View Order</button>
-  <button id="update_menu">Update Menu</button>
-  <button id="view_item_list">View Item List</button>
-  <button id="sign_out">Sign Out</button>
-
+    <table class="homepage-container">
+      <tr>
+        <td colspan="5"><h1>Hello {{ emp.username }}</h1></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="button-container">
+            <button class="button" id="new_order">New Order</button>
+          </div>
+        </td>
+        <td>
+          <div class="button-container">
+            <button class="button" id="update_menu">Update Menu</button>
+          </div>
+        </td>
+        <td>
+          <div class="button-container">
+            <button class="button" id="view_order">View Order</button>
+          </div>
+        </td>
+        <td>
+          <div class="button-container">  
+            <button class="button" id="view_item_list">View Item List</button>
+          </div>
+        </td>
+        <td>
+          <div class="button-container">  
+            <button class="button" id="sign_out">Sign Out</button>
+          </div>
+        </td>
+      </tr>
+    </table>
   </body>
-
   <script>
       var emp_role = '{{ emp.role }}';
       var emp_id = '{{ emp.id }}'

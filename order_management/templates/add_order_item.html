@@ -1,65 +1,59 @@
+{% load static %} 
+
 <!DOCTYPE html>
-<html>
-
-<head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Item</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'src/myStyle.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-</head>
-
-<body>
-  
-{% block content %}
-<h1>Add Item</h1>
-<form method="POST">
-    {% csrf_token %}
-    <div class="form-group">
-    <label for="menu_item">Menu Item:</label>
-    <select name="menu_item_id" id="menu_item" class="form-control">
-        {% for item in menu_items %}
-        <option value="{{ item.id }}" data-description="{{ item.description }}">{{ item.name }}</option>
-        {% endfor %}
-    </select>
-    </div>
-    <div class="form-group">
-    <table>
-        <td>
-            <label for="item_description">Desciption:</label>
-        </td>
-        <td>
-            <textarea id="item_description" rows="4" cols="50" readonly>{{ menu_items.0.description }}</textarea>
-        </td>
-    </table>
-    <label for="quantity">Quantity:</label>
-    <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1">
-    <br>
-    <table>
-        <td>
-            <label for="note">Note:</label>
-        </td>
-        <td>
-            <textarea name="note" id="note" rows="4" cols="50"></textarea>
-        </td>
-    </table>
-    </div>
-    <button type="submit" class="btn btn-primary">Add</button>
-</form>
-{% endblock %}
-
-<br>
-<button id="view_menu">View menu</button>
-
-</body>
-
-<script>
-    $(document).ready(function() {
-        $('#menu_item').change(function() {
-            description = $(this).find(':selected').data('description');
-            $('#item_description').text(description);
-        });
-
-        $('#view_menu').click(function() {
-            window.location.href = window.location.origin + '/menu/0/' + '{{ order.id }}'
-        });
-    });
-</script>
-
+    <script src="{% static 'src/myScript.js' %}"></script>
+  </head>
+    <body>
+        <div class="order">
+            {% block content %}
+            <h1>Add Item</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                <label for="menu_item">Menu Item:</label>
+                <select name="menu_item_id" id="menu_item" class="form-control">
+                    {% for item in menu_items %}
+                    <option value="{{ item.id }}" data-description="{{ item.description }}">{{ item.name }}</option>
+                    {% endfor %}
+                </select>
+                </div>
+                <div class="form-group">
+                <table class="des-field">
+                    <td class="label">
+                        <label for="item_description">Desciption:</label>
+                    </td>
+                    <td class="textarea">
+                        <textarea id="item_description" rows="4" cols="50" readonly>{{ menu_items.0.description }}</textarea>
+                    </td>
+                </table>
+                <label for="quantity">Quantity:</label>
+                <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1">
+                <br>
+                <table class="note-field">
+                    <td class="label">
+                        <label for="note">Note:</label>
+                    </td>
+                    <td class="textarea">
+                        <textarea name="note" id="note" rows="4" cols="50"></textarea>
+                    </td>
+                </table>
+                </div>
+                <button type="submit" class="button">Add</button>
+                <button class="button" id="view_menu">View menu</button>
+            </form>
+            {% endblock %}
+        </div>
+    </body>
+    <script>
+        var order_id = '{{ order.id }}'
+    </script>
 </html>

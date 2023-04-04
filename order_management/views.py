@@ -1,6 +1,7 @@
 from .models import Employee, Table, Customer, Order, Emp_Order, MenuType, MenuItem, Status, OrderItem, TempItem
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.sessions.models import Session
 from django.contrib import messages
 
 # Create your views here.
@@ -343,7 +344,7 @@ def add_order_item(request, emp_id, order_id):
     }
     return render(request, 'add_order_item.html', context)
 
-def update_items(request, emp_id, order_id, item_id):
+def update_item(request, emp_id, order_id, item_id):
     emp = Employee.objects.get(id=emp_id)
     order = get_object_or_404(Order, id=order_id)
     item = get_object_or_404(OrderItem, id=item_id)

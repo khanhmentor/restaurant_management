@@ -1,34 +1,44 @@
+{% load static %} 
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Order</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'src/myStyle.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="{% static 'src/myScript.js' %}"></script>
+  </head>
+  <body>
+    <div class="order">
+      {% block content %}
+      <h1>New Order</h1>
+      <form method="POST">
+        {% csrf_token %}
+        <label for="customer_name">Customer Name:</label>
+        <input type="text" name="customer_name" class="form-control" required>
+        <br>
+        <label for="table_number">Table Number:</label>
+        <select name="table_number_id" id="table_number" class="form-control">
+            {% for table in tables %}
+            <option value="{{ table.id }}">{{ table.number }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button class="button" id="create-btn" type="submit">Create Order</button>
+      </form>
+      {% endblock %}
 
-<body>
-  
-{% block content %}
-<h1>New Order</h1>
-<form method="POST">
-  {% csrf_token %}
-  <label for="customer_name">Customer Name:</label>
-  <input type="text" name="customer_name" required>
-  <br>
-  <label for="table_number">Table Number:</label>
-  <select name="table_number_id" id="table_number" class="form-control">
-      {% for table in tables %}
-      <option value="{{ table.id }}">{{ table.number }}</option>
+      {% if messages %}
+      {% for message in messages %}
+        <div class="message">
+          {{ message }}
+        </div>
       {% endfor %}
-  </select>
-  <br>
-  <button type="submit">Create Order</button>
-</form>
-{% endblock %}
-
-{% if messages %}
-{% for message in messages %}
-  <div class="alert alert-{{ message.tags }}">
-    {{ message }}
-  </div>
-{% endfor %}
-{% endif %}
-
-</body>
-
+      {% endif %}
+    </div>
+  </body>
 </html>

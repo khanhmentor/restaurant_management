@@ -5,7 +5,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Detail</title>
+    <title>View Order</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'src/myStyle.css' %}">
@@ -15,17 +15,15 @@
     <script src="{% static 'src/myScript.js' %}"></script>
   </head>
   <body>
-    <h1>All Orders</h1>
-    <button id="filter-button">Enable Filter</button>
-    <br><br>
+    <div class="order">
+      <h1>All Orders</h1>
+      <button class="button" id="filter-button">Enable Filter</button>
+      <br><br>
 
-    <label id="label" for="order-time-input" hidden>Filter By Order Time:</label>
-    <input type="date" id="order-time-input" hidden>
-    <br><br>
+      <input type="date" id="order-time-input" hidden>
+      <br><br>
 
-    {% load order_tags %}
-    {% with orders as order_list %}
-      {% for order in order_list %}
+      {% for order in orders %}
         <table>
           <tr>
           <th>Customer Name:</th>
@@ -46,26 +44,25 @@
           </tr>
           <tr>
             <th>Total:</th>
-            <td>{{ order.total_cost }} $</td>
+            <td class="total-field">{{ order.total_cost }} $</td>
           </tr>
         </table>
       {% endfor %}
       <br><br>
-      {% calculate_total_sum orders as total_sum %}
-      <div id="total-sum">Total Sum: {{ total_sum }} $</div>
-    {% endwith %}
 
-    {% if messages %}
-    {% for message in messages %}
-      <div id="message" class="alert alert-{{ message.tags }}">
-        {{ message }}
-      </div>
-    {% endfor %}
-    {% endif %}
+      <div class="total-sum">Total Sum: <span></span> $</div>
+
+      {% if messages %}
+      {% for message in messages %}
+        <div class="message">
+          {{ message }}
+        </div>
+      {% endfor %}
+      {% endif %}
+    </div>
   </body>
 
-<script>
-    var emp_role = '{{ emp.role }}'
-</script>
-
+  <script>
+      var emp_role = '{{ emp.role }}'
+  </script>
 </html>

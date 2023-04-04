@@ -1,57 +1,66 @@
-<!DOCTYPE html>
-<html>
-<body>
-  
-{% block content %}
-<h1>Item List</h1>
+{% load static %} 
 
-{% for item in item_list %}
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Quantity</th>
-        <th>Note</th>
-        <th>Status</th>
-    </tr>
-    <tr>
-        <td>{{ item.menu.name }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.note }}</td>
-        <td>
-            <form method="POST">
-                {% csrf_token %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item List</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'src/myStyle.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="{% static 'src/myScript.js' %}"></script>
+  </head>
+    <body>
+        <div class="order">
+            {% block content %}
+                <h1>Item List</h1>
+                {% for item in item_list %}
                 <table>
                     <tr>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Note</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>{{ item.menu.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.note }}</td>
                         <td>
-                            <div class="form-group">
-                                <select name="new_status_id" id="new_status" class="form-control">
-                                    {% for st in status %}
-                                    <option value="{{ st.id }}"{% if st.id == item.status.id %}selected{% endif %}>{{ st.name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-primary">Update</button>
-                            <input type="hidden" name="item_id" value="{{ item.id }}" readonly>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="new_status_id" id="new_status" class="form-control">
+                                                    {% for st in status %}
+                                                    <option value="{{ st.id }}"{% if st.id == item.status.id %}selected{% endif %}>{{ st.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="button">Update</button>
+                                            <input type="hidden" name="item_id" value="{{ item.id }}" readonly>
+                                        </td>
+                                    </tr>
+                                </table>        
+                            </form>
                         </td>
                     </tr>
-                </table>        
-            </form>
-        </td>
-    </tr>
-</table>
-{% endfor %}
-
-{% if messages %}
-{% for message in messages %}
-  <div class="alert alert-{{ message.tags }}">
-    {{ message }}
-  </div>
-{% endfor %}
-{% endif %}
-
-{% endblock %}
-
-</body>
+                </table>
+                {% endfor %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="message">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endblock %}
+        </div>
+    </body>
 </html>

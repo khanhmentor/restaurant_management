@@ -4,15 +4,34 @@ $(document).ready(function() {
 
     var pages = {
 
+        /*Login*/
+
+        'accountslogin': function() {
+            $('.login-form .button').click(function(e) {
+                form = $('.login-form form')[0];
+                if (form.checkValidity()) {
+                    e.preventDefault();
+                    $('.login-form .button').addClass('move-right');
+                    setTimeout(function() {
+                        $('.login-form form').submit();
+                    }, 1000);
+                }
+                else {
+                    form.reportValidity()
+                }
+            });
+        },
+
         /*Homepage*/
 
         '': function() {
             if (emp_role != 'cook')
                 $('#update_menu').hide(),
-                $('#view_item_list').hide()
+                $('#view_item_list').hide();
             if ($.inArray(emp_role, ['waiter', 'manager']) < 0) 
                 $('#new_order').hide(),
-                $('#view_order').hide()
+                $('#view_order').hide(),
+                $('#sign_out').css('margin-left', '5px');
             $("#new_order").click(function(){
                 window.location.href = window.location.pathname + 'order/';
             });
@@ -30,9 +49,21 @@ $(document).ready(function() {
             });
         },
 
-        /*Order Detail*/
+        /*Order*/
 
         'view_order': function() {
+            function calSum() {
+                var total = 0
+
+                $('.total-field:visible').each(function() {
+                    total += parseFloat($(this).text());
+                });
+                
+                $('.total-sum span').text(total.toFixed(2));
+            }
+
+            calSum()
+
             var filter_enabled = false;
 
             if ($('#message').text().includes('There is no order at all'))
@@ -56,6 +87,7 @@ $(document).ready(function() {
 
             $("#order-time-input").change(function(){
                 var input_time = $("#order-time-input").val();
+
                 $(".order-time").each(function(){
                     var order_time = moment($(this).text(), 'MMMM DD, YYYY, h:mm a').tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD');
                     
@@ -65,25 +97,87 @@ $(document).ready(function() {
                         $(this).parent().parent().hide();
                     }
                 });
+        
+                calSum()
             });
 
-            $(".button").click(function(){
+            $("table .button").click(function(){
                 id = $(this).attr('id');
                 window.location.href = window.location.pathname.replace('view_order', 'order/' + id);
             });
         },
-        // '': function() {
+        
+        'order': function() {
+            $('.order #create-btn').click(function(e) {
+                form = $('.order form')[0];
+                if (form.checkValidity()) {
+                    e.preventDefault();
+                    $('.order #create-btn').addClass('move-right');
+                    setTimeout(function() {
+                        $('.order form').submit();
+                    }, 1000);
+                }
+                else {
+                    form.reportValidity()
+                }
+            });
 
-        // },
-        // '': function() {
+            if ($("#is_paid").html() == 'Yes')
+                $("#add").hide(),
+                $(".update").hide(),
+                $("#complete").hide()
+            $("#add").click(function(){
+                window.location.href = window.location.pathname + 'add_item/';
+            });
+            $(".update").click(function(){
+                id = $(this).attr('id')
+                window.location.href = window.location.pathname + 'update_item/' + id;
+            });
+            $("#complete").click(function(){
+                window.location.href = window.location.pathname + 'complete/';
+            });
+        },
 
-        // },
-        // '': function() {
+        'orderadd_item': function() {
+            $('#menu_item').change(function() {
+                description = $(this).find(':selected').data('description');
+                $('#item_description').text(description);
+            });
+    
+            $('#view_menu').click(function(e) {
+                e.preventDefault();
+                window.location.href = window.location.origin + '/menu/0/' + order_id;
+            });
+        },
 
-        // },
-        // '': function() {
+        'orderupdate_item': function() {
+            $('#menu_item').change(function() {
+                if ($('#menu_item').val() == '{{ this_item.menu.id }}')
+                    quantity = $(this).find(':selected').data('quantity'),
+                    $('#quantity').val(quantity);
+                else 
+                    $('#quantity').val(1);
+            });
+            $('#cancel').click(function(e) {
+                e.preventDefault();
+                window.location.href = window.location.pathname + 'cancel/';
+            });
+        },
+        
+        /*Cook*/
+        
+        'update_menu': function() {
+            $('#is_available').val($('#menu_item').find(':selected').data('is_available'));
+            $('#menu_item').change(function() {
+                description = $(this).find(':selected').data('description');
+                price = $(this).find(':selected').data('price');
+                is_available = $(this).find(':selected').data('is_available');
+                $('#item_description').text(description);
+                $('#price').val(price);
+                $('#is_available').val(is_available);
+            });
+        },
 
-        // },
 
         /*Customer*/
 
@@ -109,7 +203,7 @@ $(document).ready(function() {
             });
         
             window.onload = function() {
-                $('#' + current_type_id).addClass('active');
+                $('#t-' + current_type_id).addClass('active');
             }
         
             $('.dishes-container').click(function() {
@@ -162,7 +256,7 @@ $(document).ready(function() {
             });
                 
             $('.menu-button').click(function() {
-                id = $(this).attr('id');
+                id = $(this).attr('id').slice(2);
                 window.location.href = window.location.origin + '/menu/' + id + '/' + order_id;
             });
         

@@ -1,105 +1,71 @@
+{% load static %} 
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Detail</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'src/myStyle.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.32/moment-timezone-with-data.min.js"></script>
+    <script src="{% static 'src/myScript.js' %}"></script>
+  </head>
+  <body>
+    <h1>All Orders</h1>
+    <button id="filter-button">Enable Filter</button>
+    <br><br>
 
-<head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.32/moment-timezone-with-data.min.js"></script>
-</head>
+    <label id="label" for="order-time-input" hidden>Filter By Order Time:</label>
+    <input type="date" id="order-time-input" hidden>
+    <br><br>
 
-<body>
+    {% load order_tags %}
+    {% with orders as order_list %}
+      {% for order in order_list %}
+        <table>
+          <tr>
+          <th>Customer Name:</th>
+          <td>{{ order.customer.name }}</td>
+          <td rowspan="4"><button class="button" id="{{ order.id }}">Order Details</button></td>
+          </tr>
+          <tr>
+          <th>Table Number:</th>
+          <td>{{ order.table.number }}</td>
+          </tr>
+          <tr>
+          <th>Order Time:</th>
+          <td class="order-time">{{ order.order_time }}</td>
+          </tr>
+          <tr>
+          <th>Is Paid:</th>
+          <td id="is_paid">{% if order.is_paid %}Yes{% else %}No{% endif %}</td>
+          </tr>
+          <tr>
+            <th>Total:</th>
+            <td>{{ order.total_cost }} $</td>
+          </tr>
+        </table>
+      {% endfor %}
+      <br><br>
+      {% calculate_total_sum orders as total_sum %}
+      <div id="total-sum">Total Sum: {{ total_sum }} $</div>
+    {% endwith %}
 
-<h1>All Orders</h1>
-<button id="filter-button">Enable Filter</button>
-<br><br>
-
-<label id="label" for="order-time-input" hidden>Filter By Order Time:</label>
-<input type="date" id="order-time-input" hidden>
-<br><br>
-
-{% load order_tags %}
-{% with orders as order_list %}
-  {% for order in order_list %}
-    <table>
-      <tr>
-      <th>Customer Name:</th>
-      <td>{{ order.customer.name }}</td>
-      <td rowspan="4"><button class="button" id="{{ order.id }}">Order Details</button></td>
-      </tr>
-      <tr>
-      <th>Table Number:</th>
-      <td>{{ order.table.number }}</td>
-      </tr>
-      <tr>
-      <th>Order Time:</th>
-      <td class="order-time">{{ order.order_time }}</td>
-      </tr>
-      <tr>
-      <th>Is Paid:</th>
-      <td id="is_paid">{% if order.is_paid %}Yes{% else %}No{% endif %}</td>
-      </tr>
-      <tr>
-        <th>Total:</th>
-        <td>{{ order.total_cost }} $</td>
-      </tr>
-    </table>
-  {% endfor %}
-  <br><br>
-  {% calculate_total_sum orders as total_sum %}
-  <div id="total-sum">Total Sum: {{ total_sum }} $</div>
-{% endwith %}
-
-{% if messages %}
-{% for message in messages %}
-  <div id="message" class="alert alert-{{ message.tags }}">
-    {{ message }}
-  </div>
-{% endfor %}
-{% endif %}
-
-</body>
+    {% if messages %}
+    {% for message in messages %}
+      <div id="message" class="alert alert-{{ message.tags }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+    {% endif %}
+  </body>
 
 <script>
-    $(document).ready(function(){
-      var filter_enabled = false;
-
-      if ($('#message').text().includes('There is no order at all'))
-        $('#total-sum').hide()
-
-      if ('{{ emp.role }}' != 'manager')
-        $('#filter-button').hide()
-
-      $("#filter-button").click(function(){
-        filter_enabled = !filter_enabled;
-        if (filter_enabled) {
-          $(this).text("Disable Filter");
-          $('#label').show();    
-          $("#order-time-input").show();
-        } else {
-          $(this).text("Enable Filter");
-          $('#label').hide();    
-          $("#order-time-input").hide();
-        }
-      });
-
-      $("#order-time-input").change(function(){
-          var input_time = $("#order-time-input").val();
-          $(".order-time").each(function(){
-            var order_time = moment($(this).text(), 'MMMM DD, YYYY, h:mm a').tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD');
-             
-            if (order_time == input_time) {
-                $(this).parent().parent().show();
-            } else {
-                $(this).parent().parent().hide();
-            }
-          });
-      });
-
-      $(".button").click(function(){
-        id = $(this).attr('id');
-        window.location.href = window.location.pathname.replace('view_order', 'order/' + id);
-      });
-    });
+    var emp_role = '{{ emp.role }}'
 </script>
 
 </html>

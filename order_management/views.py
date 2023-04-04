@@ -23,12 +23,13 @@ def view_menu(request, type_id, order_id):
 
     if request.session.session_key not in [emp_order.emp.session_id for emp_order in emp_orders if emp_order.emp.session_id != None]:
         return redirect('none_of_your_bussiness')
+    
     starting_type = MenuType.objects.all()[0]
-    starting_menu = MenuItem.objects.all().filter(type=starting_type)
+    starting_menu = MenuItem.objects.all().filter(type=starting_type, is_available=True)
 
     if type_id != 0:
         new_type = get_object_or_404(MenuType, id=type_id)
-        new_menu = MenuItem.objects.all().filter(type=new_type)
+        new_menu = MenuItem.objects.all().filter(type=new_type, is_available=True)
         context = {
             'order_id': order_id,
             'menu_types': MenuType.objects.all(),
@@ -61,12 +62,18 @@ def about(request, order_id):
 @csrf_exempt
 def view_cart(request, order_id):
     order = get_object_or_404(Order, id=order_id)
+    emp_orders = Emp_Order.objects.all().filter(order=order)
+
+    if request.session.session_key not in [emp_order.emp.session_id for emp_order in emp_orders if emp_order.emp.session_id != None]:
+        return redirect('none_of_your_bussiness')
+
     starting_type = MenuType.objects.all()[0]
     temp_items = TempItem.objects.all().filter(order=order)
+    available_temp_items = [item for item in temp_items if item.menu.is_available == True]
 
     if request.method == 'POST':
         if (request.POST['form_name'] == "Confirmed"):
-            for temp_item in temp_items:
+            for temp_item in available_temp_items:
                 order_item = OrderItem()
                 order_item.order = temp_item.order
                 order_item.menu = temp_item.menu
@@ -86,9 +93,11 @@ def view_cart(request, order_id):
             temp_item.get_subtotal_cost()
             temp_item.save()
 
+        return redirect('view_cart', order_id)    
+
     context = {
         'order': order,
-        'temp_items': temp_items,
+        'temp_items': available_temp_items,
         'current_type_id': starting_type.id,
     }
     return render(request, 'view_cart.html', context)

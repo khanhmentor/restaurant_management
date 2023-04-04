@@ -1,46 +1,32 @@
+{% load static %} 
+
 <!DOCTYPE html>
-<html>
-
-<head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'src/myStyle.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-</head>
+    <script src="{% static 'src/myScript.js' %}"></script>
+  </head>
 
-<body>
-  
-<h1>Hello {{ emp.username }}</h1>
+  <body>
+    
+  <h1>Hello {{ emp.username }}</h1>
 
-<button id="new_order">New Order</button>
-<button id="view_order">View Order</button>
-<button id="update_menu">Update Menu</button>
-<button id="view_item_list">View Item List</button>
-<button id="sign_out">Sign Out</button>
+  <button id="new_order">New Order</button>
+  <button id="view_order">View Order</button>
+  <button id="update_menu">Update Menu</button>
+  <button id="view_item_list">View Item List</button>
+  <button id="sign_out">Sign Out</button>
 
-</body>
+  </body>
 
-<script>
-    $(document).ready(function(){
-      if ('{{ emp.role }}' != 'cook')
-        $('#update_menu').hide(),
-        $('#view_item_list').hide()
-      if ($.inArray('{{ emp.role }}', ['waiter', 'manager']) < 0) 
-        $('#new_order').hide(),
-        $('#view_order').hide()
-      $("#new_order").click(function(){
-        window.location.href = window.location.pathname + 'order/';
-      });
-      $("#view_order").click(function(){
-        window.location.href = window.location.pathname + 'view_order/';
-      });
-      $("#update_menu").click(function(){
-        window.location.href = window.location.pathname + 'update_menu/';
-      });
-      $("#view_item_list").click(function(){
-        window.location.href = window.location.pathname + 'item_list/';
-      });
-      $("#sign_out").click(function(){
-        window.location.href = window.location.origin + '/{{ emp.id }}/sign_out/';
-      });
-    });
-</script>
-
+  <script>
+      var emp_role = '{{ emp.role }}';
+      var emp_id = '{{ emp.id }}'
+  </script>
 </html>

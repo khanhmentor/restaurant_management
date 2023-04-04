@@ -1,39 +1,45 @@
+{% load static %} 
+
 <!DOCTYPE html>
-<html>
-
-<head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-</head>
-
-<body>
-  
-{% block content %}
-<h2>Sign In</h2>
-<form method="post">
-  {% csrf_token %}
-  <div class="form-group">
-    <label for="username">Username</label>
-    <input type="text" name="username" class="form-control" required>
-  </div>
-  <br>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" name="password" class="form-control" required>
-  </div>
-  <br>
-  {% if messages %}
-    {% for message in messages %}
-      <div class="alert alert-{{ message.tags }}">
-        {{ message }}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'src/myStyle.css' %}">
+  </head>
+  <body>
+    <div class="login">
+      <div class="login-header">
+        <h3>Sign In</h3>
       </div>
-    {% endfor %}
-  {% endif %}
-  <br>
-  <button type="submit" class="btn btn-primary">Sign In</button>
-</form>
-{% endblock %}
-<br>
-
-</body>
-
+      <div class="login-form">
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" required>
+            <i class="fa fa-user-o"></i>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" required>
+            <i class="fa fa-lock"></i>
+          </div>
+          {% if messages %}
+          <div class="alert alert-danger">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+          <div class="form-group">
+            <button type="submit" class="submit-btn">Sign In</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>

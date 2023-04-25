@@ -1,7 +1,6 @@
 from .models import Employee, Table, Customer, Order, Emp_Order, MenuType, MenuItem, Status, OrderItem, TempItem
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.sessions.models import Session
 from django.contrib import messages
 
 # Create your views here.
